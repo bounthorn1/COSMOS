@@ -1,0 +1,229 @@
+/* ============================================================
+   COSMOS — Phase 2 & 3 immersive layer
+   3D viewer · orbit map · preloader · route transitions ·
+   GSAP parallax coexistence rules
+   ============================================================ */
+
+/* ---- Route transition ---- */
+.route-anim {
+  animation: route-in 0.55s var(--ease) both;
+}
+
+@keyframes route-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---- Cinematic preloader ---- */
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 400;
+  display: grid;
+  place-items: center;
+  background: var(--bg-0);
+  opacity: 1;
+  transition: opacity 0.55s var(--ease);
+}
+
+.preloader.is-leaving {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.preloader-inner {
+  display: grid;
+  justify-items: center;
+  gap: 1.4rem;
+  color: var(--ink);
+}
+
+.preloader-line {
+  width: 148px;
+  height: 1px;
+  background: var(--line-strong);
+  overflow: hidden;
+}
+
+.preloader-progress {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--accent);
+  transform-origin: left center;
+  animation: preloader-sweep 1.05s var(--ease) both;
+}
+
+@keyframes preloader-sweep {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* ---- 3D viewer frames ---- */
+.viewer-frame {
+  position: relative;
+  border-radius: 50%;
+}
+
+.viewer-frame--overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.9s var(--ease);
+}
+
+.viewer-frame--overlay.is-ready {
+  opacity: 1;
+}
+
+.viewer-frame--standalone {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-l);
+  border: 1px solid var(--line);
+  overflow: hidden;
+  background:
+    radial-gradient(38rem 20rem at 70% 8%, rgba(138, 180, 255, 0.08), transparent 62%),
+    var(--bg-1);
+  box-shadow: var(--shadow-deep);
+}
+
+.viewer-frame .viewer-canvas {
+  position: absolute;
+  inset: 0;
+  touch-action: pan-y;
+}
+
+.viewer-photo {
+  border-radius: inherit;
+}
+
+.viewer-badge {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.42rem 0.85rem;
+  border: 1px solid var(--line);
+  border-radius: 99px;
+  background: rgba(4, 6, 13, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: var(--ink-2);
+  font-family: var(--font-display);
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.viewer-frame--standalone .viewer-badge {
+  color: var(--accent);
+}
+
+.featured-viewer {
+  position: relative;
+  margin-top: 1.6rem;
+}
+
+html[lang='km'] .viewer-badge {
+  letter-spacing: 0.04em;
+  text-transform: none;
+  font-size: 0.72rem;
+}
+
+/* ---- Orbit map ---- */
+.orbit-map {
+  margin: 0 0 clamp(2.4rem, 4.5vw, 3.6rem);
+}
+
+.orbit-canvas {
+  width: 100%;
+  aspect-ratio: 16 / 8;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-l);
+  background:
+    radial-gradient(46rem 22rem at 50% 50%, rgba(94, 140, 255, 0.05), transparent 70%),
+    var(--bg-1);
+  touch-action: pan-y;
+}
+
+.orbit-caption {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+  margin-top: 0.85rem;
+}
+
+.orbit-hint {
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+html[lang='km'] .orbit-hint {
+  letter-spacing: 0.04em;
+  text-transform: none;
+}
+
+@media (max-width: 720px) {
+  .orbit-canvas {
+    aspect-ratio: 4 / 4.4;
+  }
+}
+
+/* ---- GSAP + reveal coexistence ------------------------------------------
+   Elements that GSAP parallax owns keep their opacity fade from .reveal
+   but hand over the transform axis entirely. */
+[data-parallax].reveal {
+  transform: none;
+  transition-property: opacity;
+}
+
+/* Hero backdrop breathes a little taller so the scrubbed drift never
+   exposes its frame. */
+.hero-photo img {
+  height: 112%;
+}
+
+/* Beyond rows: imagery drifts inside a clipped frame */
+.beyond-photo {
+  overflow: hidden;
+}
+
+.beyond-photo img {
+  height: 112%;
+}
+
+/* ---- Reduced motion: kill the immersive layer's own animations ---- */
+@media (prefers-reduced-motion: reduce) {
+  .route-anim,
+  .preloader-progress {
+    animation: none;
+  }
+  .viewer-frame--overlay {
+    transition: none;
+  }
+}

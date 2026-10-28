@@ -1,0 +1,234 @@
+/* ============================================================
+   COSMOS — Navigation
+   ============================================================ */
+
+.navbar {
+  position: fixed;
+  inset-inline: 0;
+  top: 0;
+  z-index: 100;
+  height: var(--nav-h);
+  transition:
+    background 0.45s var(--ease),
+    border-color 0.45s var(--ease),
+    backdrop-filter 0.45s var(--ease);
+  border-bottom: 1px solid transparent;
+}
+
+.navbar.is-scrolled,
+.navbar.is-open {
+  background: rgba(4, 6, 13, 0.78);
+  backdrop-filter: blur(18px);
+  border-bottom-color: var(--line);
+}
+
+.navbar-inner {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.navbar-brand {
+  display: inline-flex;
+  flex: 0 0 auto;
+  border-radius: 6px;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  color: var(--ink);
+}
+
+.logo-mark {
+  flex: 0 0 auto;
+}
+
+.logo-word {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.02rem;
+  letter-spacing: 0.42em;
+  text-indent: 0.42em; /* visually recentres the tracked wordmark */
+}
+
+html[lang='km'] .logo-word {
+  letter-spacing: 0.34em;
+}
+
+/* ---- Desktop links ---- */
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: clamp(1.1rem, 2.4vw, 2.2rem);
+}
+
+.navbar-link {
+  position: relative;
+  padding: 0.4rem 0.1rem;
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  transition: color 0.3s var(--ease);
+}
+
+html[lang='km'] .navbar-link {
+  letter-spacing: 0.02em;
+  text-transform: none;
+  font-size: 0.9rem;
+}
+
+.navbar-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 100%;
+  bottom: -2px;
+  height: 1px;
+  background: var(--accent);
+  transition: right 0.35s var(--ease);
+}
+
+.navbar-link:hover {
+  color: var(--ink);
+}
+
+.navbar-link:hover::after,
+.navbar-link.is-active::after {
+  right: 0;
+}
+
+.navbar-link.is-active {
+  color: var(--ink);
+}
+
+/* ---- Right side ---- */
+.navbar-side {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.navbar-toggle {
+  display: none;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+/* ---- Mobile drawer (sibling of <header>, fixed to viewport) ---- */
+.navbar-drawer {
+  position: fixed;
+  inset: var(--nav-h) 0 0 0;
+  z-index: 90;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 2rem var(--gutter) 2.4rem;
+  background:
+    radial-gradient(30rem 22rem at 80% -8%, rgba(94, 140, 255, 0.12), transparent 60%),
+    rgba(4, 6, 13, 0.97);
+  backdrop-filter: blur(20px);
+  opacity: 0;
+  transform: translateY(-8px);
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 0.35s var(--ease),
+    transform 0.35s var(--ease),
+    visibility 0s linear 0.35s;
+  overflow-y: auto;
+}
+
+.navbar-drawer.is-open {
+  opacity: 1;
+  transform: none;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.drawer-links {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.drawer-link {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.85rem 0.2rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 6vw, 2rem);
+  font-weight: 600;
+  color: var(--ink);
+  border-bottom: 1px solid var(--line);
+  opacity: 0;
+  transform: translateY(12px);
+  transition:
+    opacity 0.5s var(--ease),
+    transform 0.5s var(--ease),
+    color 0.3s var(--ease);
+}
+
+.navbar-drawer.is-open .drawer-link {
+  opacity: 1;
+  transform: none;
+}
+
+.drawer-link:hover {
+  color: var(--accent);
+}
+
+.drawer-index {
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  color: var(--accent);
+}
+
+.drawer-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 1.6rem;
+}
+
+.drawer-lang-label {
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+/* ---- Responsive ---- */
+@media (min-width: 861px) {
+  .navbar-drawer {
+    display: none;
+  }
+}
+
+@media (max-width: 860px) {
+  .navbar-links {
+    display: none;
+  }
+
+  .navbar-toggle {
+    display: grid;
+  }
+}
+
+@media (max-width: 420px) {
+  .lang-switch--inline {
+    display: none;
+  }
+}

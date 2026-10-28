@@ -1,0 +1,29 @@
+{
+  "name": "cosmos-explore-the-universe",
+  "description": "COSMOS — a cinematic, bilingual (EN/KH) space exploration website. Phase 1: UI design & visual foundation.",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint src"
+  },
+  "dependencies": {
+    "@react-three/drei": "^9.117.3",
+    "@react-three/fiber": "^8.17.10",
+    "gsap": "^3.12.5",
+    "lucide-react": "^0.525.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.30.0",
+    "three": "^0.170.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "eslint": "^9.20.0",
+    "eslint-plugin-react": "^7.37.5",
+    "vite": "^5.4.11"
+  }
+}
